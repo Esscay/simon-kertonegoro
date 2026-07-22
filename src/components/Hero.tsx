@@ -1,19 +1,24 @@
 "use client";
 
 import Image from "next/image";
+import { useCallback } from "react";
 import {
   motion,
   useScroll,
   useTransform,
   useMotionTemplate,
+  useMotionValue,
+  useSpring,
 } from "framer-motion";
 
 /**
- * Simple layered hero, no pinned scroll:
+ * Layered hero, no pinned scroll:
  *  - Bottom layer: simon-bg-fade - Simon with the room feathering into
  *    transparency, page background showing through.
  *  - Top layer: the party photo (identical frame), fading out over the
  *    first ~600px of scroll. Then the page flows on organically.
+ * Mouse parallax: the two layers drift a few px against each other,
+ * giving the hero depth on pointer devices.
  */
 export default function Hero() {
   const { scrollY } = useScroll();
@@ -27,17 +32,35 @@ export default function Hero() {
   const contrast = useTransform(sharpen, [0, 1], [1, 1.08]);
   const soloFilter = useMotionTemplate`saturate(${saturate}) contrast(${contrast})`;
 
-  return (
-    <section className="relative h-screen overflow-hidden">
-      {/* Ambient site-theme glow, revealed as the photo fades */}
-      <div className="absolute inset-0 bg-deep">
-        <div className="absolute left-1/2 top-1/2 h-[80vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-marble/30 blur-[140px]" />
-        <div className="absolute left-[15%] bottom-[10%] h-[40vh] w-[30vw] rounded-full bg-neon-pink/10 blur-[120px]" />
-        <div className="absolute right-[15%] top-[15%] h-[40vh] w-[30vw] rounded-full bg-neon-cyan/10 blur-[120px]" />
-      </div>
+  // Mouse parallax: -1..1 normalized cursor position, spring-smoothed
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 60, damping: 20 });
+  const sy = useSpring(my, { stiffness: 60, damping: 20 });
+  const soloX = useTransform(sx, [-1, 1], [-10, 10]);
+  const soloY = useTransform(sy, [-1, 1], [-6, 6]);
+  const groupX = useTransform(sx, [-1, 1], [7, -7]);
+  const groupY = useTransform(sy, [-1, 1], [4, -4]);
 
-      {/* Bottom layer - Simon */}
-      <motion.div style={{ filter: soloFilter }} className="absolute inset-0">
+  const onMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      const { innerWidth, innerHeight } = window;
+      mx.set((e.clientX / innerWidth) * 2 - 1);
+      my.set((e.clientY / innerHeight) * 2 - 1);
+    },
+    [mx, my]
+  );
+
+  return (
+    <section
+      onMouseMove={onMouseMove}
+      className="relative h-screen overflow-hidden"
+    >
+      {/* Bottom layer - Simon (slightly overscaled so parallax never shows edges) */}
+      <motion.div
+        style={{ filter: soloFilter, x: soloX, y: soloY }}
+        className="absolute -inset-4"
+      >
         <Image
           src="/simon-bg-fade.webp"
           alt="Simon Kertonegoro"
@@ -49,7 +72,10 @@ export default function Hero() {
       </motion.div>
 
       {/* Top layer - the party photo, fading out on scroll */}
-      <motion.div style={{ opacity: groupOpacity }} className="absolute inset-0">
+      <motion.div
+        style={{ opacity: groupOpacity, x: groupX, y: groupY }}
+        className="absolute -inset-4"
+      >
         <Image
           src="/hero-group.webp"
           alt="Simon Kertonegoro with friends"

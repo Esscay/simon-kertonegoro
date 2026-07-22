@@ -24,10 +24,6 @@
   --font-display: var(--font-display);
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   background: var(--bg-deep);
   color: var(--foreground);
@@ -40,14 +36,79 @@ body {
   color: #fff;
 }
 
-/* Thin neon scrollbar */
+/* Clean, minimal scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-deep);
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--neon-pink), var(--neon-cyan));
-  border-radius: 5px;
+  background: rgba(238, 241, 255, 0.14);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(238, 241, 255, 0.25);
+}
+html {
+  scrollbar-color: rgba(238, 241, 255, 0.14) var(--bg-deep);
+}
+
+/* ── Living background ─────────────────────────────────────────────────────
+   Slowly drifting aurora blobs. Transform-only animation, GPU-cheap. */
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  will-change: transform;
+}
+.aurora-1 {
+  width: 55vw;
+  height: 55vh;
+  left: 10%;
+  top: 5%;
+  animation: drift-1 38s ease-in-out infinite alternate;
+}
+.aurora-2 {
+  width: 40vw;
+  height: 40vh;
+  right: -10%;
+  top: 30%;
+  animation: drift-2 46s ease-in-out infinite alternate;
+}
+.aurora-3 {
+  width: 40vw;
+  height: 45vh;
+  left: -12%;
+  bottom: 5%;
+  animation: drift-3 52s ease-in-out infinite alternate;
+}
+.aurora-4 {
+  width: 60vw;
+  height: 50vh;
+  right: 5%;
+  bottom: -15%;
+  animation: drift-2 60s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes drift-1 {
+  from { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(8vw, 6vh) scale(1.15); }
+  to   { transform: translate(-6vw, 10vh) scale(0.95); }
+}
+@keyframes drift-2 {
+  from { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-10vw, -6vh) scale(1.2); }
+  to   { transform: translate(4vw, -12vh) scale(1); }
+}
+@keyframes drift-3 {
+  from { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(10vw, -8vh) scale(1.1); }
+  to   { transform: translate(14vw, 4vh) scale(0.9); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob {
+    animation: none;
+  }
 }

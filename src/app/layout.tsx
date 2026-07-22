@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
+import AmbientBackground from "@/components/AmbientBackground";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const display = Space_Grotesk({
   variable: "--font-display",
@@ -36,7 +38,11 @@ export default function RootLayout({
       lang="en"
       className={`${display.variable} ${body.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <SmoothScroll />
+        <AmbientBackground />
+        {children}
+      </body>
     </html>
   );
 }

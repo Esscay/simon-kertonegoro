@@ -18,13 +18,6 @@ export default function Timeline() {
 
   return (
     <section id="work" className="relative pb-40">
-      {/* Ambient glows so the blue world continues below the hero */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-40 top-1/4 h-[500px] w-[500px] rounded-full bg-neon-pink/10 blur-[160px]" />
-        <div className="absolute -right-40 top-2/3 h-[500px] w-[500px] rounded-full bg-neon-cyan/10 blur-[160px]" />
-        <div className="absolute left-1/3 top-10 h-[400px] w-[600px] rounded-full bg-marble/40 blur-[140px]" />
-      </div>
-
       <div className="relative mx-auto max-w-5xl px-6">
         <motion.header
           initial={{ opacity: 0, y: 30 }}
@@ -67,25 +60,39 @@ function TimelineEntry({ project, index }: { project: Project; index: number }) 
 
   return (
     <li className="relative">
-      {/* Node on the spine */}
-      <span
+      {/* Node on the spine, pops as its card lands */}
+      <motion.span
+        initial={{ scale: 0, opacity: 0 }}
+        whileInView={{ scale: 1, opacity: 1 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ type: "spring", stiffness: 300, damping: 15, delay: 0.35 }}
         className="absolute left-4 md:left-1/2 top-8 z-10 block h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-deep"
         style={{ background: accent, boxShadow: `0 0 14px ${accent}` }}
       />
       {/* Period label on the opposite side (desktop only) */}
-      <span
+      <motion.span
+        initial={{ opacity: 0, x: left ? 16 : -16 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
         className={`hidden md:block absolute top-7 text-sm font-display tracking-widest text-muted ${
           left ? "left-1/2 ml-10" : "right-1/2 mr-10"
         }`}
       >
         {project.period}
-      </span>
+      </motion.span>
 
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{
+          opacity: 0,
+          y: 48,
+          x: left ? -48 : 48,
+          scale: 0.94,
+          filter: "blur(12px)",
+        }}
+        whileInView={{ opacity: 1, y: 0, x: 0, scale: 1, filter: "blur(0px)" }}
         viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={`ml-12 md:ml-0 md:w-[calc(50%-2.5rem)] ${
           left ? "" : "md:ml-auto"
         }`}
