@@ -19,7 +19,7 @@ export default function Hero() {
   const { scrollY } = useScroll();
 
   const groupOpacity = useTransform(scrollY, [0, 600], [1, 0]);
-  const textOpacity = useTransform(scrollY, [0, 350], [1, 0]);
+  const cueOpacity = useTransform(scrollY, [0, 250], [1, 0]);
 
   // Simon sharpens slightly as the party fades
   const sharpen = useTransform(scrollY, [0, 600], [0, 1]);
@@ -63,26 +63,26 @@ export default function Hero() {
       {/* Bottom gradient into the page background */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-deep to-transparent" />
 
-      {/* Name + scroll cue */}
-      <motion.div
-        style={{ opacity: textOpacity }}
-        className="absolute inset-x-0 bottom-14 flex flex-col items-center text-center px-6"
-      >
+      {/* Name (persistent) + scroll cue */}
+      <div className="absolute inset-x-0 bottom-14 flex flex-col items-center text-center px-6">
         <p className="text-xs sm:text-sm tracking-[0.35em] uppercase text-white/70">
           Founder · Engineer · Builder
         </p>
         <h1 className="mt-3 font-display text-4xl sm:text-6xl font-semibold text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.6)]">
           Simon Kertonegoro
         </h1>
-        <div className="mt-8 flex flex-col items-center gap-2 text-white/60">
+        <motion.div
+          style={{ opacity: cueOpacity }}
+          className="mt-8 flex flex-col items-center gap-2 text-white/60"
+        >
           <span className="text-[11px] tracking-[0.3em] uppercase">Scroll</span>
           <motion.span
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
             className="block h-8 w-px bg-gradient-to-b from-white/70 to-transparent"
           />
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 }
