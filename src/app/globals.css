@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  /* The world: deep royal blue → near-black navy */
+  --bg-deep: #060a24;
+  --bg-royal: #101a55;
+  --bg-marble: #1b2a80;
+  --foreground: #eef1ff;
+  --muted: #8b93c8;
+  /* Neon accents (match the hero aura) */
+  --neon-pink: #ff4fd8;
+  --neon-cyan: #4fd8ff;
+}
+
+@theme inline {
+  --color-deep: var(--bg-deep);
+  --color-royal: var(--bg-royal);
+  --color-marble: var(--bg-marble);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-neon-pink: var(--neon-pink);
+  --color-neon-cyan: var(--neon-cyan);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-deep);
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--neon-pink);
+  color: #fff;
+}
+
+/* Thin neon scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--neon-pink), var(--neon-cyan));
+  border-radius: 5px;
+}
