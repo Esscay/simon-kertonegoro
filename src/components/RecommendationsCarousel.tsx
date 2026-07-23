@@ -29,7 +29,7 @@ export default function RecommendationsCarousel() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex items-center justify-between">
           <p className="text-xs tracking-[0.35em] uppercase text-muted">
-            What colleagues say
+            What my colleagues say
           </p>
           <div className="flex gap-2">
             <button
