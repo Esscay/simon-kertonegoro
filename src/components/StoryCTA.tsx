@@ -11,15 +11,14 @@ export default function StoryCTA() {
     <section className="relative pb-24">
       <div className="mx-auto max-w-7xl px-6">
         <div className="conic-border shadow-[0_30px_90px_-25px_rgba(0,0,0,0.85)] transition-transform duration-300 hover:-translate-y-1">
-          <div
-            role="button"
-            tabIndex={0}
+          <a
+            href="/story"
             aria-label="Read my story"
-            onClick={() => setStoryOpen(true)}
-            onKeyDown={(e) =>
-              (e.key === "Enter" || e.key === " ") && setStoryOpen(true)
-            }
-            className="group relative cursor-pointer rounded-[calc(1.5rem-1px)] bg-surface/95 px-8 py-14 text-center backdrop-blur-xl sm:px-12 sm:py-16"
+            onClick={(e) => {
+              e.preventDefault();
+              setStoryOpen(true);
+            }}
+            className="group relative block cursor-pointer rounded-[calc(1.5rem-1px)] bg-surface/95 px-8 py-14 text-center backdrop-blur-xl sm:px-12 sm:py-16"
           >
             <header className="flex items-center justify-center gap-5 sm:gap-8">
               <span
@@ -46,7 +45,7 @@ export default function StoryCTA() {
             <p className="mt-3 text-xs tracking-[0.35em] uppercase text-muted">
               Read My Story
             </p>
-          </div>
+          </a>
         </div>
       </div>
 

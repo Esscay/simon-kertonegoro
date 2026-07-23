@@ -7,7 +7,7 @@
  */
 
 import {
-  recommendations,
+  recommendationsFor,
   type Recommendation,
 } from "@/data/recommendations";
 
@@ -113,6 +113,7 @@ export const projects: Project[] = [
     link: { label: "trustpager.com", href: "https://trustpager.com" },
     video:
       "https://player.vimeo.com/video/1180343011?badge=0&title=0&byline=0&portrait=0",
+    recommendations: recommendationsFor("trustpager"),
     brand: {
       logo: "/logos/trustpager.webp",
       accent: "#21b6e4",
@@ -159,6 +160,7 @@ export const projects: Project[] = [
       "Automation Development",
     ],
     link: { label: "finalpiece.ai", href: "https://finalpiece.ai" },
+    recommendations: recommendationsFor("finalpiece"),
     brand: {
       logo: "/logos/finalpiece.webp",
       accent: "#8b5cf6",
@@ -426,7 +428,7 @@ export const projects: Project[] = [
       "Unity SDK",
     ],
     video: "https://www.youtube.com/embed/17-1c4mOIrk",
-    recommendations,
+    recommendations: recommendationsFor("enjin"),
     link: { label: "enjin.io", href: "https://enjin.io" },
     brand: {
       logo: "/logos/enjin.webp",

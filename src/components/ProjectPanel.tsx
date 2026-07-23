@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Project } from "@/data/projects";
+import QuoteText from "@/components/QuoteText";
 
 /**
  * Full-height detail drawer. Slides in from the OPPOSITE edge to the card
@@ -266,7 +267,7 @@ export default function ProjectPanel({
                     }`}
                     style={{ color: fg }}
                   >
-                    LinkedIn recommendations
+                    Recommendations
                   </h4>
                   <div className="mt-4 space-y-4 pb-2">
                     {project.recommendations.map((rec) => (
@@ -309,16 +310,16 @@ export default function ProjectPanel({
                             className="shrink-0 text-xs font-medium opacity-0 transition-opacity duration-200 group-hover:opacity-100"
                             style={{ color: accent }}
                           >
-                            View on LinkedIn ↗
+                            {rec.linkLabel ?? "View on LinkedIn ↗"}
                           </span>
                         </div>
                         <p
-                          className={`mt-3 whitespace-pre-line text-sm leading-relaxed ${
+                          className={`mt-3 text-sm leading-relaxed ${
                             brand ? "" : "text-foreground/80"
                           }`}
                           style={{ color: body }}
                         >
-                          {rec.quote}
+                          <QuoteText text={rec.quote} />
                         </p>
                       </a>
                     ))}

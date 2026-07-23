@@ -183,11 +183,14 @@ function TimelineEntry({
       >
         {brand ? (
           /* Branded "ad" card: the platform's logo and colors on light */
-          <button
-            type="button"
-            onClick={() => onOpen(left)}
+          <a
+            href={`/work/${project.id}`}
+            onClick={(e) => {
+              e.preventDefault();
+              onOpen(left);
+            }}
             aria-label={`${project.title} - view details`}
-            className="group w-full cursor-pointer rounded-2xl p-7 sm:p-9 text-left transition-all duration-300 hover:-translate-y-1.5"
+            className="group block w-full cursor-pointer rounded-2xl p-7 sm:p-9 text-left transition-all duration-300 hover:-translate-y-1.5"
             style={{
               background: `radial-gradient(120% 90% at 85% 0%, ${accent}18, transparent 55%), ${
                 brand.background ?? "#ffffff"
@@ -237,13 +240,16 @@ function TimelineEntry({
                 →
               </span>
             </span>
-          </button>
+          </a>
         ) : (
           /* Default dark glass card */
-          <button
-            type="button"
-            onClick={() => onOpen(left)}
-            className="group w-full cursor-pointer rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-8 text-left backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.07] hover:shadow-[0_10px_50px_-12px_var(--glow-2-soft)]"
+          <a
+            href={`/work/${project.id}`}
+            onClick={(e) => {
+              e.preventDefault();
+              onOpen(left);
+            }}
+            className="group block w-full cursor-pointer rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-8 text-left backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.07] hover:shadow-[0_10px_50px_-12px_var(--glow-2-soft)]"
           >
             <p className="md:hidden text-xs tracking-widest uppercase text-muted">
               {project.period}
@@ -279,7 +285,7 @@ function TimelineEntry({
               View details
               <span aria-hidden>→</span>
             </span>
-          </button>
+          </a>
         )}
       </motion.div>
     </li>
