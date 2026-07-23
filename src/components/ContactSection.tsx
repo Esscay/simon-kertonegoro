@@ -196,7 +196,24 @@ export default function ContactSection() {
               )}
 
               {/* Contact details reveal */}
-              <aside className="flex min-w-0 flex-col justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-8 text-center">
+              <aside
+                role="button"
+                tabIndex={trustToken ? 0 : -1}
+                aria-disabled={!trustToken}
+                aria-label="View contact details"
+                onClick={() => trustToken && setModalOpen(true)}
+                onKeyDown={(e) => {
+                  if (trustToken && (e.key === "Enter" || e.key === " ")) {
+                    e.preventDefault();
+                    setModalOpen(true);
+                  }
+                }}
+                className={`flex min-w-0 flex-col justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-8 text-center transition-colors ${
+                  trustToken
+                    ? "cursor-pointer hover:border-accent-1/40 hover:bg-white/[0.05]"
+                    : "cursor-not-allowed"
+                }`}
+              >
                 <p className="font-display text-xl font-semibold text-white">
                   Prefer direct?
                 </p>
@@ -204,18 +221,19 @@ export default function ContactSection() {
                   Email, phone, LinkedIn and GitHub, behind a quick human
                   check.
                 </p>
-                <button
-                  type="button"
-                  disabled={verifying || !trustToken}
-                  onClick={() => trustToken && setModalOpen(true)}
-                  className="mt-6 cursor-pointer rounded-full border border-white/15 px-6 py-3 text-sm font-medium text-accent-1 transition-colors hover:border-accent-1/60 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+                <span
+                  className={`mt-6 block w-full rounded-full border px-6 py-3 text-center text-sm font-medium transition-colors ${
+                    trustToken
+                      ? "border-white/15 text-accent-1"
+                      : "border-white/10 text-muted"
+                  }`}
                 >
                   {verifying
                     ? "Verifying..."
                     : trustToken
                       ? "View Contact Details"
                       : "Complete the check first"}
-                </button>
+                </span>
               </aside>
             </div>
           </div>
