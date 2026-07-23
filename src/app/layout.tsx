@@ -1,18 +1,15 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import AmbientBackground from "@/components/AmbientBackground";
 import SmoothScroll from "@/components/SmoothScroll";
 
-const display = Space_Grotesk({
-  variable: "--font-display",
+// Same family as FinalPiece AI (finalpiece.ai): Geist everywhere,
+// weight does the display/body differentiation
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const body = Inter({
-  variable: "--font-body",
-  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -36,9 +33,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${body.variable} h-full antialiased`}
+      className={`${geist.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body>
         <SmoothScroll />
         <AmbientBackground />
         {children}

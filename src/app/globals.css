@@ -1,57 +1,96 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   THEME — the single source of truth for every color on the site.
+   Edit this block to retheme everything: components, effects, canvas stars.
+   ═══════════════════════════════════════════════════════════════════════════ */
 :root {
-  /* The world: deep royal blue → near-black navy */
+  /* The world: deep navy blues (backgrounds) */
   --bg-deep: #060a24;
-  --bg-royal: #101a55;
-  --bg-marble: #1b2a80;
-  --foreground: #eef1ff;
+  --bg-mid: #101a55;
+  --bg-haze: #1b2a80;
+  --surface: #0a1030; /* panels, drawers, cards */
+
+  /* Text */
+  --foreground: #f4f0e6; /* warm white */
   --muted: #8b93c8;
-  /* Neon accents (match the hero aura) */
-  --neon-pink: #ff4fd8;
-  --neon-cyan: #4fd8ff;
+
+  /* Warm luminous accents over the navy */
+  --accent-1: #f8bc58; /* gold */
+  --accent-2: #e0813f; /* copper */
+  --cream: #fff1d6; /* warm white for gradient midpoints + starlight */
+
+  /* Derived glows (alpha variants) - keep all alpha usage here */
+  --glow-1: color-mix(in srgb, var(--accent-1) 60%, transparent);
+  --glow-1-soft: color-mix(in srgb, var(--accent-1) 25%, transparent);
+  --glow-2: color-mix(in srgb, var(--accent-2) 60%, transparent);
+  --glow-2-soft: color-mix(in srgb, var(--accent-2) 25%, transparent);
+  --glow-cream: color-mix(in srgb, var(--cream) 80%, transparent);
+  --shadow-deep: color-mix(in srgb, var(--bg-deep) 90%, transparent);
 }
 
 @theme inline {
   --color-deep: var(--bg-deep);
-  --color-royal: var(--bg-royal);
-  --color-marble: var(--bg-marble);
+  --color-mid: var(--bg-mid);
+  --color-haze: var(--bg-haze);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
-  --color-neon-pink: var(--neon-pink);
-  --color-neon-cyan: var(--neon-cyan);
-  --font-sans: var(--font-body);
-  --font-display: var(--font-display);
+  --color-accent-1: var(--accent-1);
+  --color-accent-2: var(--accent-2);
+  --color-cream: var(--cream);
+  --font-sans: var(--font-geist);
+  --font-display: var(--font-geist);
 }
 
 body {
   background: var(--bg-deep);
   color: var(--foreground);
-  font-family: var(--font-body), system-ui, sans-serif;
+  font-family: var(--font-geist), "Geist", -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--neon-pink);
-  color: #fff;
+  background: var(--accent-1);
+  color: var(--bg-deep);
 }
 
-/* Clean, minimal scrollbar */
+/* Clean, minimal scrollbar - light enough to read against the navy */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-deep);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(238, 241, 255, 0.14);
-  border-radius: 4px;
+  background: color-mix(in srgb, var(--foreground) 38%, transparent);
+  border-radius: 5px;
+  border: 2px solid var(--bg-deep);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(238, 241, 255, 0.25);
+  background: color-mix(in srgb, var(--foreground) 55%, transparent);
 }
 html {
-  scrollbar-color: rgba(238, 241, 255, 0.14) var(--bg-deep);
+  scrollbar-color: color-mix(in srgb, var(--foreground) 38%, transparent)
+    var(--bg-deep);
+  /* keep layout steady when the page scrollbar hides behind the drawer */
+  scrollbar-gutter: stable;
+}
+
+/* Lenis required styles: html/body must stay height:auto for correct
+   page-height measurement (a fixed height caps the scroll range) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 /* ── Living background ─────────────────────────────────────────────────────
@@ -109,6 +148,143 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   .aurora-blob {
+    animation: none;
+  }
+}
+
+/* ── God rays ──────────────────────────────────────────────────────────────
+   Light shafts fanning up from bottom-center of the hero, behind Simon's
+   back, like a sunrise backlight. Very slow rotation. */
+.god-rays {
+  position: absolute;
+  left: 50%;
+  top: 108%;
+  width: 240vmax;
+  height: 240vmax;
+  background: repeating-conic-gradient(
+    from 0deg,
+    color-mix(in srgb, var(--accent-1) 11%, transparent) 0deg,
+    transparent 7deg,
+    color-mix(in srgb, var(--cream) 7%, transparent) 13deg,
+    transparent 20deg,
+    color-mix(in srgb, var(--accent-2) 10%, transparent) 27deg,
+    transparent 34deg
+  );
+  mask-image: radial-gradient(
+    closest-side,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.35) 35%,
+    transparent 62%
+  );
+  -webkit-mask-image: radial-gradient(
+    closest-side,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.35) 35%,
+    transparent 62%
+  );
+  animation: rays-spin 120s linear infinite;
+  will-change: transform;
+}
+@keyframes rays-spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .god-rays {
+    animation: none;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ── Ray flow ──────────────────────────────────────────────────────────────
+   Soft bands of light sweeping upward, on the same 16-degree diagonal as
+   the shooting stars. Repeating gradient translated by exactly one period
+   per loop, so the motion is seamless. */
+.ray-flow {
+  position: absolute;
+  inset: -30%;
+  background: repeating-linear-gradient(
+    16deg,
+    transparent 0px,
+    transparent 90px,
+    color-mix(in srgb, var(--cream) 4.5%, transparent) 120px,
+    color-mix(in srgb, var(--cream) 8.5%, transparent) 130px,
+    color-mix(in srgb, var(--cream) 4.5%, transparent) 140px,
+    transparent 170px
+  );
+  mask-image: radial-gradient(
+    55% 55% at 50% 32%,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.3) 45%,
+    transparent 75%
+  );
+  -webkit-mask-image: radial-gradient(
+    55% 55% at 50% 32%,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.3) 45%,
+    transparent 75%
+  );
+  animation: ray-flow-up 6s linear infinite;
+  will-change: transform;
+}
+@keyframes ray-flow-up {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    /* one gradient period (170px) along the 16-degree up vector */
+    transform: translate3d(46.9px, -163.4px, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ray-flow {
+    animation: none;
+  }
+}
+
+/* ── Traveling conic border ────────────────────────────────────────────────
+   A rotating conic-gradient layer clipped behind a 1px inset card, so two
+   warm comets (gold + copper) continuously travel around the card's edge. */
+.conic-border {
+  position: relative;
+  border-radius: 1.5rem;
+  padding: 1px;
+  overflow: hidden;
+  /* faint static border so the edge never disappears between comets */
+  background: color-mix(in srgb, var(--foreground) 8%, transparent);
+}
+.conic-border::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 250%;
+  aspect-ratio: 1;
+  background: conic-gradient(
+    transparent 0deg,
+    var(--accent-1) 40deg,
+    transparent 80deg,
+    transparent 180deg,
+    var(--accent-2) 220deg,
+    transparent 260deg
+  );
+  animation: conic-spin 7s linear infinite;
+  will-change: transform;
+}
+@keyframes conic-spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .conic-border::before {
     animation: none;
   }
 }

@@ -9,10 +9,10 @@ export default function AmbientBackground() {
       aria-hidden
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-deep"
     >
-      <div className="aurora-blob aurora-1 bg-marble/40" />
-      <div className="aurora-blob aurora-2 bg-neon-pink/[0.07]" />
-      <div className="aurora-blob aurora-3 bg-neon-cyan/[0.07]" />
-      <div className="aurora-blob aurora-4 bg-royal/50" />
+      <div className="aurora-blob aurora-1 bg-haze/40" />
+      <div className="aurora-blob aurora-2 bg-accent-1/[0.07]" />
+      <div className="aurora-blob aurora-3 bg-accent-2/[0.07]" />
+      <div className="aurora-blob aurora-4 bg-mid/50" />
     </div>
   );
 }

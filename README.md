@@ -22,6 +22,17 @@ All timeline content lives in **`src/data/projects.ts`**. It is the only file yo
 - **Expandable details:** give an entry `highlights: [...]` and the card gets a `+` that expands on click.
 - **Per-entry accent color:** set `accent: "#4fd8ff"` (defaults to neon pink).
 
+## Theming
+
+Every color on the site comes from the `:root` theme block at the top of
+`src/app/globals.css` - backgrounds, accents, text, glows, CSS effects, and
+even the canvas shooting stars (which read the variables at runtime). Edit
+that one block to retheme everything. Alpha variants are derived there via
+`color-mix`, so no component carries hardcoded rgba values.
+
+Current palette: deep navy world, warm luminous highlights (gold `--accent-1`,
+copper `--accent-2`, cream `--cream`).
+
 ## Develop
 
 ```bash
