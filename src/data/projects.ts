@@ -58,8 +58,8 @@ export const projects: Project[] = [
   {
     id: "trustpager",
     title: "TrustPager",
-    tagline: "The output of 25 devs, shipped by one",
-    period: "2024 - Present",
+    tagline: "I built a multi-tenant CRM and AI automation platform by myself",
+    period: "2025 - Present",
     role: "Founder & Sole Developer",
     description:
       "Twenty Australian businesses run their whole operation on it daily. Every line built by one person, with AI agents as first-class operators.",
@@ -114,8 +114,8 @@ export const projects: Project[] = [
   {
     id: "finalpiece",
     title: "FinalPiece AI",
-    tagline: "Full-service delivery, headcount of two",
-    period: "2023 - Present",
+    tagline: "A team of two. Building websites, CRMs, and AI automations.",
+    period: "2024 - Present",
     role: "Founder & Lead Developer",
     description:
       "Two people delivering what agencies staff whole teams for. Websites, CRM builds, voice agents and automations, shipped in weeks.",

@@ -14,14 +14,14 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://simonkertonegoro.com"),
-  title: "Simon Kertonegoro - Founder & Builder",
+  title: "Simon Kertonegoro - Full-Stack Developer · Project Manager",
   description:
     "Founder of FinalPiece AI and sole developer of TrustPager CRM. A timeline of the products I've built.",
   openGraph: {
-    title: "Simon Kertonegoro - Founder & Builder",
+    title: "Simon Kertonegoro - Full-Stack Developer · Project Manager",
     description:
       "Founder of FinalPiece AI and sole developer of TrustPager CRM. A timeline of the products I've built.",
-    images: ["/hero-stylized.webp"],
+    images: ["/og.jpg"],
   },
 };
 

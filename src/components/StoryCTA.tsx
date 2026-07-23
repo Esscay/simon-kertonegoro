@@ -31,7 +31,7 @@ export default function StoryCTA() {
                 className="h-1.5 w-1.5 rotate-45 bg-accent-1/80 shadow-[0_0_8px_var(--glow-1)]"
               />
               <h2 className="pb-2 -mb-2 font-display text-3xl sm:text-4xl font-bold tracking-tight whitespace-nowrap bg-gradient-to-r from-accent-1 via-cream to-accent-2 bg-clip-text text-transparent drop-shadow-[0_0_24px_var(--glow-2-soft)]">
-                My Story
+                About Me
               </h2>
               <span
                 aria-hidden
@@ -44,7 +44,7 @@ export default function StoryCTA() {
             </header>
 
             <p className="mt-3 text-xs tracking-[0.35em] uppercase text-muted">
-              About Me
+              Read My Story
             </p>
           </div>
         </div>
