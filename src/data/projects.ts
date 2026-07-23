@@ -6,6 +6,11 @@
  * ──────────────────────────────────────────────────────────────────────────────
  */
 
+import {
+  recommendations,
+  type Recommendation,
+} from "@/data/recommendations";
+
 export type Project = {
   /** unique slug, used as the React key */
   id: string;
@@ -35,6 +40,8 @@ export type Project = {
   hidden?: boolean;
   /** optional embedded video at the top of the detail panel (Vimeo player URL) */
   video?: string;
+  /** optional LinkedIn recommendations shown at the bottom of the panel */
+  recommendations?: Recommendation[];
   /**
    * Branding for the card + detail panel. When present, the card renders as
    * a light "ad" for the platform: its logo, its colors, white background.
@@ -419,6 +426,7 @@ export const projects: Project[] = [
       "Unity SDK",
     ],
     video: "https://www.youtube.com/embed/17-1c4mOIrk",
+    recommendations,
     link: { label: "enjin.io", href: "https://enjin.io" },
     brand: {
       logo: "/logos/enjin.webp",

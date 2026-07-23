@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
   images: {
     // allow the hero layers to be served at near-lossless quality
     qualities: [75, 95],
+    // allow ?v= cache-busting on local images
+    localPatterns: [{ pathname: "/**" }],
   },
 };
 

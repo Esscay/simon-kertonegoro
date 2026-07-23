@@ -64,7 +64,7 @@ export default function Hero() {
       {/* Bottom layer - Simon */}
       <motion.div style={{ filter: soloFilter }} className="absolute inset-0">
         <Image
-          src="/simon-bg-fade.webp"
+          src="/simon-bg-fade.webp?v=3"
           alt="Simon Kertonegoro"
           fill
           priority

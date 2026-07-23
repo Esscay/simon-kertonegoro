@@ -257,6 +257,74 @@ export default function ProjectPanel({
                   </span>
                 ))}
               </div>
+
+              {project.recommendations && (
+                <div className="mt-10">
+                  <h4
+                    className={`font-display text-xl font-semibold ${
+                      brand ? "" : "text-white"
+                    }`}
+                    style={{ color: fg }}
+                  >
+                    LinkedIn recommendations
+                  </h4>
+                  <div className="mt-4 space-y-4 pb-2">
+                    {project.recommendations.map((rec) => (
+                      <a
+                        key={rec.name}
+                        href={rec.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`group block rounded-xl border p-5 transition-all duration-200 hover:-translate-y-0.5 ${
+                          brand
+                            ? "border-black/10 bg-black/[0.03] hover:border-black/25"
+                            : "border-white/10 bg-white/[0.04] hover:border-white/25"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={rec.avatar}
+                            alt={rec.name}
+                            width={44}
+                            height={44}
+                            className={`rounded-full border ${
+                              brand ? "border-black/10" : "border-white/15"
+                            }`}
+                          />
+                          <div className="min-w-0 flex-1">
+                            <p
+                              className={`text-sm font-semibold ${
+                                brand ? "" : "text-white"
+                              }`}
+                              style={{ color: fg }}
+                            >
+                              {rec.name}
+                            </p>
+                            <p className="text-xs" style={{ color: subtle }}>
+                              {rec.title} · {rec.relationship}
+                            </p>
+                          </div>
+                          <span
+                            className="shrink-0 text-xs font-medium opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                            style={{ color: accent }}
+                          >
+                            View on LinkedIn ↗
+                          </span>
+                        </div>
+                        <p
+                          className={`mt-3 whitespace-pre-line text-sm leading-relaxed ${
+                            brand ? "" : "text-foreground/80"
+                          }`}
+                          style={{ color: body }}
+                        >
+                          {rec.quote}
+                        </p>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Footer link */}
