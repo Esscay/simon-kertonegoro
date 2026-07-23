@@ -28,7 +28,12 @@ export default function Hero() {
     [0, 55, 105, 150],
     [1, 0.88, 0.45, 0]
   );
-  const cueOpacity = useTransform(scrollY, [0, 250], [1, 0]);
+  // Fades in sync with the party photo overlay
+  const cueOpacity = useTransform(
+    scrollY,
+    [0, 55, 105, 150],
+    [1, 0.88, 0.45, 0]
+  );
 
   // Simon sharpens slightly as the party fades
   const sharpen = useTransform(scrollY, [0, 150], [0, 1]);
