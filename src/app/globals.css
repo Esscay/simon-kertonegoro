@@ -288,3 +288,29 @@ html.lenis body {
     animation: none;
   }
 }
+
+/* ── Turnstile fit ───────────────────────────────────────────────────────────
+   The Cloudflare widget renders a fixed 300px iframe with a hard min-width, so
+   on phones it would push the layout wider than the viewport. Clip + center it
+   so it can never overflow, and scale it down to fit inside the card padding on
+   narrower screens. overflow:hidden stops the fixed 300px box from contributing
+   to the document width. */
+.cf-turnstile-wrap {
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+  overflow: hidden;
+}
+/* On phones the widget takes the full row and centers; on desktop it stays
+   auto-width so it nestles inline on the right of the Send-message row. */
+@media (max-width: 639px) {
+  .cf-turnstile-wrap {
+    width: 100%;
+  }
+}
+@media (max-width: 400px) {
+  .cf-turnstile-wrap > div {
+    transform: scale(0.82);
+    transform-origin: center top;
+  }
+}

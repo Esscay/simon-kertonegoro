@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   keywords: [
     "Simon Kertonegoro",
     "Full-Stack Developer",
-    "Project Manager",
+    "Technical Lead",
     "TrustPager",
     "FinalPiece AI",
     "AI-native development",
@@ -53,7 +53,7 @@ const personJsonLd = {
   name: "Simon Kertonegoro",
   url: SITE_URL,
   image: `${SITE_URL}/og.jpg`,
-  jobTitle: "Full-Stack Developer & Project Manager",
+  jobTitle: "Full-Stack Developer & Technical Lead",
   description: SITE_DESCRIPTION,
   worksFor: {
     "@type": "Organization",

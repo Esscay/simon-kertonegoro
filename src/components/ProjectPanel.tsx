@@ -106,7 +106,7 @@ export default function ProjectPanel({
                   <img
                     src={brand.logo}
                     alt={`${project.title} logo`}
-                    className="h-10 w-auto"
+                    className="h-10 w-auto max-w-full object-contain object-left"
                   />
                 ) : (
                   <h3 className="font-display text-3xl sm:text-4xl font-bold text-white">
@@ -174,7 +174,7 @@ export default function ProjectPanel({
               </p>
 
               {project.facts && (
-                <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
                   {project.facts.map((fact) => (
                     <div
                       key={fact.label}
@@ -289,7 +289,7 @@ export default function ProjectPanel({
                             alt={rec.name}
                             width={44}
                             height={44}
-                            className={`rounded-full border ${
+                            className={`h-11 w-11 shrink-0 rounded-full border object-cover ${
                               brand ? "border-black/10" : "border-white/15"
                             }`}
                           />
@@ -307,7 +307,7 @@ export default function ProjectPanel({
                             </p>
                           </div>
                           <span
-                            className="shrink-0 text-xs font-medium opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                            className="hidden shrink-0 text-xs font-medium opacity-0 transition-opacity duration-200 group-hover:opacity-100 md:inline"
                             style={{ color: accent }}
                           >
                             {rec.linkLabel ?? "View on LinkedIn ↗"}

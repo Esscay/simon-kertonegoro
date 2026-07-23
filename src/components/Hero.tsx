@@ -45,7 +45,7 @@ export default function Hero() {
   const raysOpacity = useTransform(scrollY, [40, 150], [0, 1]);
 
   return (
-    <section className="relative h-screen overflow-hidden">
+    <section className="relative h-svh overflow-hidden">
       {/* Light effects behind everything, revealed by the fade */}
       <motion.div
         style={{ opacity: raysOpacity }}
@@ -147,7 +147,7 @@ export default function Hero() {
             aria-hidden
             className="hidden sm:block h-px w-10 bg-gradient-to-r from-transparent to-accent-1/70"
           />
-          Full-Stack Developer · Project Manager
+          Full-Stack Developer · Technical Lead
           <span
             aria-hidden
             className="hidden sm:block h-px w-10 bg-gradient-to-l from-transparent to-accent-2/70"

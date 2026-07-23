@@ -18,27 +18,27 @@ export default function StoryCTA() {
               e.preventDefault();
               setStoryOpen(true);
             }}
-            className="group relative block cursor-pointer rounded-[calc(1.5rem-1px)] bg-surface/95 px-8 py-14 text-center backdrop-blur-xl sm:px-12 sm:py-16"
+            className="group relative block cursor-pointer rounded-[calc(1.5rem-1px)] bg-surface/95 px-6 py-14 text-center backdrop-blur-xl sm:px-12 sm:py-16"
           >
-            <header className="flex items-center justify-center gap-5 sm:gap-8">
+            <header className="flex items-center justify-center gap-4 sm:gap-8">
               <span
                 aria-hidden
-                className="h-px flex-1 max-w-40 bg-gradient-to-r from-transparent to-accent-1/60"
+                className="hidden sm:block h-px flex-1 max-w-40 bg-gradient-to-r from-transparent to-accent-1/60"
               />
               <span
                 aria-hidden
-                className="h-1.5 w-1.5 rotate-45 bg-accent-1/80 shadow-[0_0_8px_var(--glow-1)]"
+                className="hidden sm:block h-1.5 w-1.5 shrink-0 rotate-45 bg-accent-1/80 shadow-[0_0_8px_var(--glow-1)]"
               />
-              <h2 className="pb-2 -mb-2 font-display text-3xl sm:text-4xl font-bold tracking-tight whitespace-nowrap bg-gradient-to-r from-accent-1 via-cream to-accent-2 bg-clip-text text-transparent drop-shadow-[0_0_24px_var(--glow-2-soft)]">
+              <h2 className="pb-2 -mb-2 text-center text-balance font-display text-3xl sm:text-4xl font-bold tracking-tight bg-gradient-to-r from-accent-1 via-cream to-accent-2 bg-clip-text text-transparent drop-shadow-[0_0_24px_var(--glow-2-soft)]">
                 About Me
               </h2>
               <span
                 aria-hidden
-                className="h-1.5 w-1.5 rotate-45 bg-accent-2/80 shadow-[0_0_8px_var(--glow-2)]"
+                className="hidden sm:block h-1.5 w-1.5 shrink-0 rotate-45 bg-accent-2/80 shadow-[0_0_8px_var(--glow-2)]"
               />
               <span
                 aria-hidden
-                className="h-px flex-1 max-w-40 bg-gradient-to-l from-transparent to-accent-2/60"
+                className="hidden sm:block h-px flex-1 max-w-40 bg-gradient-to-l from-transparent to-accent-2/60"
               />
             </header>
 

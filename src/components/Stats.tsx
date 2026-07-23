@@ -30,27 +30,27 @@ export default function Stats() {
             onKeyDown={(e) =>
               (e.key === "Enter" || e.key === " ") && setStoryOpen(true)
             }
-            className="group relative cursor-pointer rounded-[calc(1.5rem-1px)] bg-surface/95 backdrop-blur-xl px-8 py-14 sm:px-12 sm:py-16"
+            className="group relative cursor-pointer rounded-[calc(1.5rem-1px)] bg-surface/95 backdrop-blur-xl px-6 py-14 sm:px-12 sm:py-16"
           >
-            <header className="flex items-center justify-center gap-5 sm:gap-8">
+            <header className="flex items-center justify-center gap-4 sm:gap-8">
               <span
                 aria-hidden
-                className="h-px flex-1 max-w-40 bg-gradient-to-r from-transparent to-accent-1/60"
+                className="hidden sm:block h-px flex-1 max-w-40 bg-gradient-to-r from-transparent to-accent-1/60"
               />
               <span
                 aria-hidden
-                className="h-1.5 w-1.5 rotate-45 bg-accent-1/80 shadow-[0_0_8px_var(--glow-1)]"
+                className="hidden sm:block h-1.5 w-1.5 shrink-0 rotate-45 bg-accent-1/80 shadow-[0_0_8px_var(--glow-1)]"
               />
-              <h2 className="pb-2 -mb-2 font-display text-3xl sm:text-4xl font-bold tracking-tight whitespace-nowrap bg-gradient-to-r from-accent-1 via-cream to-accent-2 bg-clip-text text-transparent drop-shadow-[0_0_24px_var(--glow-2-soft)]">
+              <h2 className="pb-2 -mb-2 text-center text-balance font-display text-3xl sm:text-4xl font-bold tracking-tight bg-gradient-to-r from-accent-1 via-cream to-accent-2 bg-clip-text text-transparent drop-shadow-[0_0_24px_var(--glow-2-soft)]">
                 Code I Shipped Myself
               </h2>
               <span
                 aria-hidden
-                className="h-1.5 w-1.5 rotate-45 bg-accent-2/80 shadow-[0_0_8px_var(--glow-2)]"
+                className="hidden sm:block h-1.5 w-1.5 shrink-0 rotate-45 bg-accent-2/80 shadow-[0_0_8px_var(--glow-2)]"
               />
               <span
                 aria-hidden
-                className="h-px flex-1 max-w-40 bg-gradient-to-l from-transparent to-accent-2/60"
+                className="hidden sm:block h-px flex-1 max-w-40 bg-gradient-to-l from-transparent to-accent-2/60"
               />
             </header>
 
@@ -58,7 +58,7 @@ export default function Stats() {
               TrustPager · Since May 2025
             </p>
 
-            <div className="mt-12 grid grid-cols-2 gap-y-12 lg:grid-cols-4">
+            <div className="mt-12 grid grid-cols-1 gap-y-10 sm:grid-cols-2 sm:gap-y-12 lg:grid-cols-4">
               {stats.map((stat, i) => (
                 <Counter key={stat.label} stat={stat} index={i} />
               ))}

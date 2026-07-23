@@ -12,27 +12,39 @@ export const SITE_KEY = "0baeb992-ded0-457b-a16f-1c653e99bc32";
 /** Turnstile widget public key (managed by TrustPager Bot Protection) */
 export const TURNSTILE_SITE_KEY = "0x4AAAAAAD8RQxIZQ8hIEPbv";
 
+/** Contact details released by /api/human-check after a verified pass. These
+ *  live in server-only env vars and are never present in the client bundle. */
+export type ContactDetails = {
+  email: string;
+  /** E.164 for the tel: link, e.g. +61431377068 */
+  phone: string;
+  /** human-readable, e.g. 0431 377 068 */
+  phoneDisplay: string;
+};
+
 /**
- * Exchange a solved Turnstile token for a short-lived trust token
- * (server-side verification). The trust token then authorises the
- * lead-form submission and the contact-details reveal.
+ * Exchange a solved Turnstile token for a short-lived trust token AND the
+ * server-held contact details, in one round-trip. Goes through our own
+ * /api/human-check route (which holds the widget secret + contact env vars)
+ * rather than calling Supabase directly, so the email/phone are only ever
+ * revealed server-side after a genuine human check. The trust token then
+ * authorises the lead-form submission.
  */
-export async function verifyTurnstile(
+export async function humanCheck(
   turnstileToken: string
-): Promise<string | null> {
+): Promise<{ trustToken: string; contact: ContactDetails | null } | null> {
   try {
-    const res = await fetch(`${SUPABASE_URL}/functions/v1/turnstile-public`, {
+    const res = await fetch("/api/human-check", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        action: "verify",
-        site_key: SITE_KEY,
-        surface: "lead_form",
-        turnstile_token: turnstileToken,
-      }),
+      body: JSON.stringify({ turnstile_token: turnstileToken }),
     });
     const json = await res.json();
-    return res.ok && json?.trust_token ? (json.trust_token as string) : null;
+    if (!res.ok || !json?.trust_token) return null;
+    return {
+      trustToken: json.trust_token as string,
+      contact: (json.contact as ContactDetails) ?? null,
+    };
   } catch {
     return null;
   }

@@ -51,7 +51,7 @@ export function GET() {
 
   const body = `# Simon Kertonegoro
 
-> Full-Stack Developer and Project Manager. Founder of FinalPiece AI and sole
+> Full-Stack Developer and Technical Lead. Founder of FinalPiece AI and sole
 > developer of TrustPager, a multi-tenant Business Operating System for
 > Australian service businesses, built solo with Claude Code since May 2025.
 

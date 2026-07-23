@@ -38,25 +38,25 @@ export default function Timeline() {
           <p className="text-xs tracking-[0.35em] uppercase text-muted">
             The work
           </p>
-          <div className="mt-4 flex items-center justify-center gap-5 sm:gap-8">
+          <div className="mt-4 flex items-center justify-center gap-4 sm:gap-8">
             <span
               aria-hidden
-              className="h-px flex-1 max-w-40 bg-gradient-to-r from-transparent to-accent-1/60"
+              className="hidden sm:block h-px flex-1 max-w-40 bg-gradient-to-r from-transparent to-accent-1/60"
             />
             <span
               aria-hidden
-              className="h-1.5 w-1.5 rotate-45 bg-accent-1/80 shadow-[0_0_8px_var(--glow-1)]"
+              className="hidden sm:block h-1.5 w-1.5 shrink-0 rotate-45 bg-accent-1/80 shadow-[0_0_8px_var(--glow-1)]"
             />
-            <h2 className="pb-2 -mb-2 font-display text-4xl sm:text-5xl font-bold tracking-tight bg-gradient-to-r from-accent-1 via-cream to-accent-2 bg-clip-text text-transparent drop-shadow-[0_0_24px_var(--glow-2-soft)]">
+            <h2 className="pb-2 -mb-2 text-center text-balance font-display text-3xl sm:text-5xl font-bold tracking-tight bg-gradient-to-r from-accent-1 via-cream to-accent-2 bg-clip-text text-transparent drop-shadow-[0_0_24px_var(--glow-2-soft)]">
               Project Timeline
             </h2>
             <span
               aria-hidden
-              className="h-1.5 w-1.5 rotate-45 bg-accent-2/80 shadow-[0_0_8px_var(--glow-2)]"
+              className="hidden sm:block h-1.5 w-1.5 shrink-0 rotate-45 bg-accent-2/80 shadow-[0_0_8px_var(--glow-2)]"
             />
             <span
               aria-hidden
-              className="h-px flex-1 max-w-40 bg-gradient-to-l from-transparent to-accent-2/60"
+              className="hidden sm:block h-px flex-1 max-w-40 bg-gradient-to-l from-transparent to-accent-2/60"
             />
           </div>
         </motion.header>
@@ -208,19 +208,24 @@ function TimelineEntry({
             <img
               src={brand.logo}
               alt={`${project.title} logo`}
-              className="mt-1 md:mt-0 h-9 w-auto"
+              className="mt-1 md:mt-0 h-9 w-auto max-w-[70%] object-contain object-left"
             />
             <p
-              className="mt-6 font-display text-2xl sm:text-[1.9rem] font-bold leading-snug"
+              className="mt-2 flex items-center gap-2 text-xs tracking-[0.2em] uppercase"
+              style={{ color: brand.muted ?? "#64748b" }}
+            >
+              <span
+                aria-hidden
+                className="inline-block h-1 w-1 shrink-0 rounded-full"
+                style={{ background: accent }}
+              />
+              {project.role}
+            </p>
+            <p
+              className="mt-2 font-display text-2xl sm:text-[1.9rem] font-bold leading-snug"
               style={{ color: brand.foreground ?? "#0f172a" }}
             >
               {project.tagline}
-            </p>
-            <p
-              className="mt-2 text-xs tracking-[0.2em] uppercase"
-              style={{ color: brand.muted ?? "#64748b" }}
-            >
-              {project.role}
             </p>
             <p
               className="mt-4 text-sm sm:text-[15px] leading-relaxed"

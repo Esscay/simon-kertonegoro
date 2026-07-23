@@ -103,7 +103,7 @@ export default function StoryArticle({
         <p className="text-center text-xs tracking-[0.35em] uppercase text-muted">
           The Results
         </p>
-        <div className="mt-8 grid grid-cols-2 gap-y-8 sm:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-y-6 sm:grid-cols-4 sm:gap-y-8">
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
               <p className="font-display text-2xl sm:text-3xl font-bold whitespace-nowrap text-white">

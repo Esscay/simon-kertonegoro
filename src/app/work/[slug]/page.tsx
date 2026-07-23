@@ -69,7 +69,7 @@ export default async function WorkPage({
             <img
               src={project.brand.logo}
               alt={`${project.title} logo`}
-              className="mb-6 h-10 w-auto rounded bg-white/90 p-1"
+              className="mb-6 h-10 w-auto max-w-full rounded bg-white/90 object-contain object-left p-1"
             />
           )}
           <h1 className="font-display text-4xl sm:text-5xl font-bold text-white">
@@ -105,7 +105,7 @@ export default async function WorkPage({
         )}
 
         {project.facts && (
-          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3">
             {project.facts.map((fact) => (
               <div
                 key={fact.label}
@@ -170,9 +170,9 @@ export default async function WorkPage({
                       alt={rec.name}
                       width={44}
                       height={44}
-                      className="rounded-full border border-white/15"
+                      className="h-11 w-11 shrink-0 rounded-full border border-white/15 object-cover"
                     />
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-sm font-semibold text-white">
                         {rec.name}
                       </p>

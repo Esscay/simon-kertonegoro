@@ -211,7 +211,7 @@ export const projects: Project[] = [
     title: "Infinity Realms",
     tagline: "An open-world MMO, built by a team of nine",
     period: "2022 - 2023",
-    role: "Founder & Project Manager",
+    role: "Founder & Technical Lead",
     description:
       "An open-world MMO built on Unity, where players journey across medieval, steampunk and cyberpunk worlds with one inventory. Hundreds of players and a real NFT economy on Enjin, with a nine-person team directed end to end.",
     highlights: [
@@ -255,7 +255,7 @@ export const projects: Project[] = [
     title: "Infinity Auto",
     tagline: "The world's first blockchain GTA 5 server",
     period: "2021 - 2023",
-    role: "Founder & Project Manager",
+    role: "Founder & Technical Lead",
     description:
       "The world's first blockchain GTA 5 server: NFTs as drivable cars, weapons and gear, earned in play and truly owned. Around 500 players and one of the tightest communities in Web3 gaming.",
     highlights: [
@@ -298,7 +298,7 @@ export const projects: Project[] = [
     title: "Infinity Minecraft",
     tagline: "The world's first blockchain Minecraft server",
     period: "2021 - 2022",
-    role: "Founder & Project Manager",
+    role: "Founder & Technical Lead",
     description:
       "The world's first blockchain Minecraft server (Survival Infinity), with the deepest NFT integration any game has shipped. Players minted land plots as NFTs, built on them, and sold the deed, and the buyer owned everything on it.",
     highlights: [
@@ -343,7 +343,7 @@ export const projects: Project[] = [
     title: "MyMetaverse",
     tagline: "One platform powering NFTs across four games",
     period: "2020 - 2023",
-    role: "Founder & Project Manager",
+    role: "Founder & Technical Lead",
     description:
       "The platform behind the world-firsts: one NFT integration layer powering ownership and rewards across Minecraft, GTA 5, an MMO and the web. Built to scale on Kubernetes, speaking Rust, Java, C#, Lua and TypeScript across its games.",
     highlights: [

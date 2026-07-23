@@ -5,9 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import Turnstile, { type TurnstileHandle } from "@/components/Turnstile";
 import {
   TURNSTILE_SITE_KEY,
-  verifyTurnstile,
+  humanCheck,
   submitLead,
   type LeadFields,
+  type ContactDetails,
 } from "@/lib/trustpager";
 
 /**
@@ -19,10 +20,11 @@ import {
  * in the HTML or bundle - only rendered after the human check passes.
  */
 
+// Public profile links (also shown in the site footer); base64 only to keep
+// them out of casual page-source scraping. Email + phone are NOT here - they
+// come from the server via humanCheck() after a verified Turnstile pass, so
+// they never appear in the client bundle.
 const DETAILS = {
-  email: "c2ltb25AZmluYWxwaWVjZS5haQ==", // simon@finalpiece.ai
-  phone: "KzYxNDMxMzc3MDY4", // +61431377068
-  phoneDisplay: "MDQzMSAzNzcgMDY4", // 0431 377 068
   linkedin: "aHR0cHM6Ly93d3cubGlua2VkaW4uY29tL2luL2Vzc2NheS8=",
   github: "aHR0cHM6Ly9naXRodWIuY29tL0Vzc2NheQ==",
 };
@@ -31,6 +33,7 @@ const decode = (v: string) => atob(v);
 export default function ContactSection() {
   const turnstileRef = useRef<TurnstileHandle>(null);
   const [trustToken, setTrustToken] = useState<string | null>(null);
+  const [contact, setContact] = useState<ContactDetails | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -46,8 +49,9 @@ export default function ContactSection() {
 
   const onToken = async (token: string) => {
     setVerifying(true);
-    const trust = await verifyTurnstile(token);
-    setTrustToken(trust);
+    const result = await humanCheck(token);
+    setTrustToken(result?.trustToken ?? null);
+    setContact(result?.contact ?? null);
     setVerifying(false);
   };
 
@@ -72,6 +76,7 @@ export default function ContactSection() {
       setError(result.error ?? "Something went wrong. Please try again.");
       turnstileRef.current?.reset();
       setTrustToken(null);
+      setContact(null);
     }
   };
 
@@ -82,34 +87,34 @@ export default function ContactSection() {
     <section id="contact" className="relative pb-24">
       <div className="mx-auto max-w-7xl px-6">
         <div className="conic-border shadow-[0_30px_90px_-25px_rgba(0,0,0,0.85)]">
-          <div className="rounded-[calc(1.5rem-1px)] bg-surface/95 px-8 py-14 backdrop-blur-xl sm:px-12 sm:py-16">
+          <div className="rounded-[calc(1.5rem-1px)] bg-surface/95 px-6 py-14 backdrop-blur-xl sm:px-12 sm:py-16">
             {/* Heading */}
-            <header className="flex items-center justify-center gap-5 sm:gap-8">
+            <header className="flex items-center justify-center gap-4 sm:gap-8">
               <span
                 aria-hidden
-                className="h-px flex-1 max-w-40 bg-gradient-to-r from-transparent to-accent-1/60"
+                className="hidden sm:block h-px flex-1 max-w-40 bg-gradient-to-r from-transparent to-accent-1/60"
               />
               <span
                 aria-hidden
-                className="h-1.5 w-1.5 rotate-45 bg-accent-1/80 shadow-[0_0_8px_var(--glow-1)]"
+                className="hidden sm:block h-1.5 w-1.5 shrink-0 rotate-45 bg-accent-1/80 shadow-[0_0_8px_var(--glow-1)]"
               />
-              <h2 className="pb-2 -mb-2 font-display text-3xl sm:text-4xl font-bold tracking-tight whitespace-nowrap bg-gradient-to-r from-accent-1 via-cream to-accent-2 bg-clip-text text-transparent drop-shadow-[0_0_24px_var(--glow-2-soft)]">
+              <h2 className="pb-2 -mb-2 text-center text-balance font-display text-3xl sm:text-4xl font-bold tracking-tight bg-gradient-to-r from-accent-1 via-cream to-accent-2 bg-clip-text text-transparent drop-shadow-[0_0_24px_var(--glow-2-soft)]">
                 Get in Touch
               </h2>
               <span
                 aria-hidden
-                className="h-1.5 w-1.5 rotate-45 bg-accent-2/80 shadow-[0_0_8px_var(--glow-2)]"
+                className="hidden sm:block h-1.5 w-1.5 shrink-0 rotate-45 bg-accent-2/80 shadow-[0_0_8px_var(--glow-2)]"
               />
               <span
                 aria-hidden
-                className="h-px flex-1 max-w-40 bg-gradient-to-l from-transparent to-accent-2/60"
+                className="hidden sm:block h-px flex-1 max-w-40 bg-gradient-to-l from-transparent to-accent-2/60"
               />
             </header>
             <p className="mt-3 text-center text-xs tracking-[0.35em] uppercase text-muted">
               Book a call about a role or a project
             </p>
 
-            <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_320px]">
+            <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_320px]">
               {/* Lead form */}
               {submitted ? (
                 <div className="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-12 text-center">
@@ -122,7 +127,7 @@ export default function ContactSection() {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={onSubmit} className="space-y-4">
+                <form onSubmit={onSubmit} className="min-w-0 space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <input
                       required
@@ -167,26 +172,31 @@ export default function ContactSection() {
                       {error}
                     </p>
                   )}
-                  <div className="flex flex-wrap items-center justify-between gap-5">
+                  <div className="flex flex-col items-center gap-5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
                     <button
                       type="submit"
                       disabled={submitting || verifying || !trustToken}
-                      className="cursor-pointer rounded-full bg-gradient-to-r from-accent-1 to-accent-2 px-7 py-3 text-sm font-semibold text-deep transition-transform duration-200 hover:scale-[1.03] disabled:cursor-not-allowed disabled:opacity-50"
+                      className="w-full cursor-pointer rounded-full bg-gradient-to-r from-accent-1 to-accent-2 px-7 py-3 text-sm font-semibold text-deep transition-transform duration-200 hover:scale-[1.03] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                     >
                       {submitting ? "Sending..." : "Send message"}
                     </button>
-                    <Turnstile
-                      ref={turnstileRef}
-                      siteKey={TURNSTILE_SITE_KEY}
-                      onToken={onToken}
-                      onExpire={() => setTrustToken(null)}
-                    />
+                    <div className="cf-turnstile-wrap">
+                      <Turnstile
+                        ref={turnstileRef}
+                        siteKey={TURNSTILE_SITE_KEY}
+                        onToken={onToken}
+                        onExpire={() => {
+                          setTrustToken(null);
+                          setContact(null);
+                        }}
+                      />
+                    </div>
                   </div>
                 </form>
               )}
 
               {/* Contact details reveal */}
-              <aside className="flex flex-col justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-8 text-center">
+              <aside className="flex min-w-0 flex-col justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-8 text-center">
                 <p className="font-display text-xl font-semibold text-white">
                   Prefer direct?
                 </p>
@@ -238,28 +248,32 @@ export default function ContactSection() {
                 Contact details
               </h3>
               <div className="mt-6 space-y-4 text-sm">
-                <a
-                  href={`mailto:${decode(DETAILS.email)}`}
-                  className="block rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 text-foreground transition-colors hover:border-accent-1/50"
-                >
-                  <span className="block text-xs uppercase tracking-widest text-muted">
-                    Email
-                  </span>
-                  <span className="mt-1 block font-medium text-accent-1">
-                    {decode(DETAILS.email)}
-                  </span>
-                </a>
-                <a
-                  href={`tel:${decode(DETAILS.phone)}`}
-                  className="block rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 text-foreground transition-colors hover:border-accent-1/50"
-                >
-                  <span className="block text-xs uppercase tracking-widest text-muted">
-                    Phone
-                  </span>
-                  <span className="mt-1 block font-medium text-accent-1">
-                    {decode(DETAILS.phoneDisplay)}
-                  </span>
-                </a>
+                {contact?.email && (
+                  <a
+                    href={`mailto:${contact.email}`}
+                    className="block rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 text-foreground transition-colors hover:border-accent-1/50"
+                  >
+                    <span className="block text-xs uppercase tracking-widest text-muted">
+                      Email
+                    </span>
+                    <span className="mt-1 block font-medium text-accent-1">
+                      {contact.email}
+                    </span>
+                  </a>
+                )}
+                {contact?.phone && (
+                  <a
+                    href={`tel:${contact.phone}`}
+                    className="block rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 text-foreground transition-colors hover:border-accent-1/50"
+                  >
+                    <span className="block text-xs uppercase tracking-widest text-muted">
+                      Phone
+                    </span>
+                    <span className="mt-1 block font-medium text-accent-1">
+                      {contact.phoneDisplay || contact.phone}
+                    </span>
+                  </a>
+                )}
                 <div className="grid grid-cols-2 gap-4">
                   <a
                     href={decode(DETAILS.linkedin)}
